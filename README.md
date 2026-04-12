@@ -16,7 +16,7 @@ To add this skill to your Gemini CLI environment:
 
 1. Run the following command:
    ```bash
-   npx skills add https://github.com/entr0pia/scoop-skills
+   npx skills add https://github.com/entr0pia/scoop-skills -g
    ```
 2. The agent will automatically recognize the `SKILL.md` and begin using it when Scoop-related tasks are requested.
 
