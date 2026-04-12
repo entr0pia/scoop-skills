@@ -1,5 +1,5 @@
 ---
-name: scoop
+name: scoop-skills
 description: Use this skill to manage Windows packages via Scoop. Trigger this skill whenever the user mentions installing software, or whenever you need to execute a CLI tool that is not pre-installed on Windows but might have a Windows version available for discovery or installation via Scoop (e.g., git, curl, neovim, bat, etc.). This skill also helps you discover and execute the "shims" (executables) installed by Scoop, ensuring you know which command-line tools are available for use.
 ---
 
