@@ -83,7 +83,6 @@ For detailed specifications, always consult the **local Wiki mirror** in `refere
 - **Core Guide**: `references/scoop-wiki/App-Manifests.md`
 - **Autoupdate Logic**: `references/scoop-wiki/App-Manifest-Autoupdate.md`
 - **Buckets Reference**: `references/scoop-wiki/Buckets.md`
-- **Advanced CLI**: `references/scoop-wiki/Commands.md`
 - **Live Examples**: Always run `scoop cat <app_name>` on a similar app to see its real manifest structure.
 
 #### Manifest Development Tools
@@ -125,3 +124,5 @@ dir $env:USERPROFILE\scoop\shims
 - **Global Installation**: Use `-g` for apps that require administrative privileges or are used by multiple users.
 - **Clear Cache**: Run `scoop cache rm *` after installations to free up disk space by removing downloaded installers.
 - **Cleanup**: Regularly run `scoop cleanup *` to save disk space by removing old versions.
+cleanup *` to save disk space by removing old versions.
+- **Deep Knowledge**: For any advanced questions, troubleshooting, or general guidance not covered here, consult the local Wiki mirror: `references/scoop-wiki/Home.md`.

@@ -8,7 +8,7 @@ A specialized skill for the Gemini CLI agent to manage Windows packages using th
 - **Shim Discovery & Management**: Deep visibility into Scoop's "shim" system, allowing the agent to find and execute installed CLI tools accurately.
 - **Environment Recovery**: Built-in knowledge for restoring Scoop from manual backups or directory moves (based on GitHub Issue #2894).
 - **Manifest Development**: Tools and references for creating, testing, and formatting Scoop application manifests.
-- **Offline Documentation**: Bundled with a local mirror of the [Official Scoop Wiki](https://github.com/ScoopInstaller/Scoop/wiki) in the `references/` directory.
+- **Offline Documentation**: Bundled with a local mirror of the [Official Scoop Wiki](https://github.com/ScoopInstaller/Scoop/wiki) in the [`/references/scoop-wiki/`](/references/scoop-wiki/) directory.
 
 ## Installation
 
@@ -32,9 +32,8 @@ Once installed, the agent will trigger this skill when you ask to:
 ## Bundled Documentation
 
 This repository includes a snapshot of the official Scoop documentation to ensure the agent has expert-level knowledge even without internet access:
-- `references/scoop-wiki/App-Manifests.md`: Core manifest specification.
-- `references/scoop-wiki/App-Manifest-Autoupdate.md`: Automated update logic.
-- `references/scoop-wiki/Commands.md`: Advanced CLI command reference.
+- [`/references/scoop-wiki/App-Manifests.md`](/references/scoop-wiki/App-Manifests.md): Core manifest specification.
+- [`/references/scoop-wiki/App-Manifest-Autoupdate.md`](/references/scoop-wiki/App-Manifest-Autoupdate.md): Automated update logic.
 
 ## License
 
