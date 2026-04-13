@@ -97,15 +97,18 @@ Internal scripts in `~\scoop\apps\scoop\current\bin` for testing and updates:
 
 Scoop uses "shims" to expose executables. If a tool's command is not found or you need to manage custom shims, use these methods:
 
-### 1. Locate a Shim Path
-To find the actual executable path for a Scoop command:
-```powershell
-scoop which <command>
-```
-
-### 2. Detailed Shim Management (`scoop shim`)
+### 1. List All Shims
 - **List Shims**: `scoop shim list [<regex_pattern>]` — List all or matching shims.
+- **Direct Directory Discovery**: To see all shim files (executables and scripts) directly:
+  ```powershell
+  dir $env:USERPROFILE\scoop\shims
+  ```
+
+### 2. Locate Paths and Details
+- **Find Path**: `scoop which <command>` — Locate the path to a shim/executable (similar to 'which' on Linux).
 - **Shim Info**: `scoop shim info <shim_name>` — Show details about a specific shim's target and arguments.
+
+### 3. Shim Management (`scoop shim`)
 - **Add Custom Shim**: 
   `scoop shim add <shim_name> <command_path> [<args>...]`
   *Note: Use a quoted `'--'` to separate shim-specific options from arguments you want to pass to the target executable.*
@@ -113,16 +116,9 @@ scoop which <command>
 - **Remove Shim**: `scoop shim rm <shim_name>...` (Caution: can remove manifest-created shims).
 - **Alter Shim**: `scoop shim alter <shim_name>` — Alternate a shim's target source.
 
-### 3. Direct Directory Discovery
-To see all shim files (executables and scripts) directly:
-```powershell
-dir $env:USERPROFILE\scoop\shims
-```
-
 ## Best Practices
 - **Environment Refresh**: If a newly installed command isn't recognized, check the shims directory or use the absolute path (e.g., `~\scoop\shims\tool.exe`).
 - **Global Installation**: Use `-g` for apps that require administrative privileges or are used by multiple users.
 - **Clear Cache**: Run `scoop cache rm *` after installations to free up disk space by removing downloaded installers.
 - **Cleanup**: Regularly run `scoop cleanup *` to save disk space by removing old versions.
-cleanup *` to save disk space by removing old versions.
 - **Deep Knowledge**: For any advanced questions, troubleshooting, or general guidance not covered here, consult the local Wiki mirror: `references/scoop-wiki/Home.md`.
