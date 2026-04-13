@@ -1,6 +1,6 @@
-# Scoop Skill for Gemini CLI
+# Scoop Skill for AI Agent
 
-A specialized skill for the Gemini CLI agent to manage Windows packages using the [Scoop](https://scoop.sh/) command-line installer.
+A specialized skill for the AI Agent agent to manage Windows packages using the [Scoop](https://scoop.sh/) command-line installer.
 
 ## Features
 
@@ -12,7 +12,7 @@ A specialized skill for the Gemini CLI agent to manage Windows packages using th
 
 ## Installation
 
-To add this skill to your Gemini CLI environment:
+To add this skill to your AI Agent environment:
 
 1. Run the following command:
    ```bash
