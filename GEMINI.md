@@ -5,7 +5,7 @@ This repository contains a specialized skill for the **Gemini CLI** designed to 
 ## Project Structure
 
 - **`SKILL.md`**: The heart of the project. It contains the metadata, triggers, and core procedural instructions that the Gemini CLI agent uses to perform Scoop operations.
-- **`references/scoop-wiki/`**: A bundled mirror of the official Scoop documentation (Wiki). This provides the agent with offline access to deep technical details regarding manifests, autoupdates, and advanced configurations.
+- **`skills/scoop-skills/references/scoop-wiki/`**: A bundled mirror of the official Scoop documentation (Wiki). This provides the agent with offline access to deep technical details regarding manifests, autoupdates, and advanced configurations.
 - **`README.md`**: General project information, features, and installation instructions for users.
 - **`LICENSE`**: The project is licensed under **GPL-3.0**.
 
@@ -28,7 +28,7 @@ npx skills add <repository-url>
 ### For Developers
 If you are modifying this skill:
 - **Testing**: You can test the skill's instructions by triggering the "scoop" keyword in a Gemini CLI session and observing if the agent correctly follows the procedures in `SKILL.md`.
-- **Updating Documentation**: The `references/scoop-wiki/` directory is a static snapshot. To update it, you can manually pull from the official Scoop Wiki repository.
+- **Updating Documentation**: The `skills/scoop-skills/references/scoop-wiki/` directory is a static snapshot. To update it, you can manually pull from the official Scoop Wiki repository.
 
 ## Development Conventions
 
