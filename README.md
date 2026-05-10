@@ -1,39 +1,53 @@
-# Scoop Skill for AI Agent
+# Scoop Skills for AI Agent
 
-A specialized skill for the AI Agent agent to manage Windows packages using the [Scoop](https://scoop.sh/) command-line installer.
+A collection of specialized skills for AI agents to manage Windows packages using [Scoop](https://scoop.sh/) command-line installer.
 
-## Features
+## Skills
 
-- **Automated Package Management**: Search, install, update, and uninstall Windows applications.
-- **Shim Discovery & Management**: Deep visibility into Scoop's "shim" system, allowing the agent to find and execute installed CLI tools accurately.
-- **Environment Recovery**: Built-in knowledge for restoring Scoop from manual backups or directory moves (based on [GitHub Issue #2894](https://github.com/ScoopInstaller/Scoop/issues/2894)).
-- **Manifest Development**: Tools and references for creating, testing, and formatting Scoop application manifests.
-- **Offline Documentation**: Bundled with a local mirror of the [Official Scoop Wiki](https://github.com/ScoopInstaller/Scoop/wiki) in the [`skills/scoop-skills/references/scoop-wiki/`](skills/scoop-skills/references/scoop-wiki/) directory.
+### [scoop-skills](skills/scoop-skills/SKILL.md)
+Core skill for Scoop package management:
+- **Package Management**: Search, install, update, and uninstall Windows applications
+- **Shim Management**: Discover and manage Scoop "shims" for CLI tools
+- **Environment Recovery**: Restore Scoop from manual backups or directory moves
+- **Manifest Development**: Create, test, and format Scoop application manifests
+- **Offline Documentation**: Bundled mirror of [Official Scoop Wiki](skills/scoop-skills/references/scoop-wiki/)
+
+### [discover-shims](skills/discover-shims/SKILL.md)
+Discover available command-line tools:
+- **Shim Scanning**: Scan all available Scoop shims
+- **Tool Analysis**: Use `--help` and `scoop info` to understand each tool
+- **Global Memory**: Write valuable tools to Agent's global memory for future reference
 
 ## Installation
 
-To add this skill to your AI Agent environment:
+```bash
+npx skills add https://github.com/entr0pia/scoop-skills -g
+```
 
-1. Run the following command:
-   ```bash
-   npx skills add https://github.com/entr0pia/scoop-skills -g
-   ```
-2. The agent will automatically recognize the `SKILL.md` and begin using it when Scoop-related tasks are requested.
+The agent will automatically recognize the skills and use them when appropriate.
 
 ## Usage
 
-Once installed, the agent will trigger this skill when you ask to:
+The agent will trigger skills when you ask:
 - "Install git using scoop"
-- "How do I restore my scoop backup from C:\backup\scoop?"
-- "What shims are currently available?"
+- "What tools are available?"
+- "How do I restore my scoop backup?"
 - "Create a manifest for this new CLI tool"
-- "Update all my scoop apps"
 
-## Bundled Documentation
+## Project Structure
 
-This repository includes a snapshot of the official Scoop documentation to ensure the agent has expert-level knowledge even without internet access:
-- [`skills/scoop-skills/references/scoop-wiki/App-Manifests.md`](skills/scoop-skills/references/scoop-wiki/App-Manifests.md): Core manifest specification.
-- [`skills/scoop-skills/references/scoop-wiki/App-Manifest-Autoupdate.md`](skills/scoop-skills/references/scoop-wiki/App-Manifest-Autoupdate.md): Automated update logic.
+```
+scoop-skills/
+├── skills/
+│   ├── scoop-skills/          # Core Scoop management skill
+│   │   ├── SKILL.md
+│   │   └── references/        # Offline Scoop documentation
+│   │       └── scoop-wiki/
+│   └── discover-shims/        # Shim discovery skill
+│       └── SKILL.md
+├── openspec/                  # OpenSpec workflow configuration
+└── .opencode/                 # OpenCode plugin configuration
+```
 
 ## License
 

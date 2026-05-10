@@ -1,37 +1,49 @@
-# Scoop Skill Project Overview
+# Scoop Skills 项目概述
 
-This repository contains a specialized skill for the **Gemini CLI** designed to empower the agent with expert-level capabilities for managing **Scoop**, the command-line installer for Windows.
+本仓库是一个**公开发布的 Scoop 技能仓库**，通过 `npx skills add` 安装到代理环境，为代理提供管理 **Scoop**（Windows 命令行安装器）的专家级能力。
 
-## Project Structure
+## 项目结构
 
-- **`SKILL.md`**: The heart of the project. It contains the metadata, triggers, and core procedural instructions that the Gemini CLI agent uses to perform Scoop operations.
-- **`skills/scoop-skills/references/scoop-wiki/`**: A bundled mirror of the official Scoop documentation (Wiki). This provides the agent with offline access to deep technical details regarding manifests, autoupdates, and advanced configurations.
-- **`README.md`**: General project information, features, and installation instructions for users.
-- **`LICENSE`**: The project is licensed under **GPL-3.0**.
+```
+scoop-skills/
+├── skills/
+│   ├── scoop-skills/          # 核心 Scoop 管理技能
+│   │   ├── SKILL.md           # 技能定义文件
+│   │   └── references/        # Scoop 官方文档本地镜像
+│   │       └── scoop-wiki/
+│   └── discover-shims/        # Shim 发现技能
+│       └── SKILL.md           # 技能定义文件
+├── openspec/                  # OpenSpec 工作流配置
+└── .opencode/                 # OpenCode 插件配置
+```
 
-## Core Capabilities
+## 技能说明
 
-The skill defined in this repository enables the agent to:
-1.  **Manage Software**: Search, install, update, and uninstall Windows applications via Scoop.
-2.  **Handle Shims**: Discover and manage Scoop "shims" to ensure command-line tools are correctly identified and executed.
-3.  **Recover Environments**: Restore Scoop installations from manual backups or directory migrations using established community best practices.
-4.  **Develop Manifests**: Create, test, and format Scoop JSON manifests using internal Scoop development scripts.
+### scoop-skills（核心技能）
+- **包管理**：搜索、安装、更新、卸载 Windows 应用
+- **Shim 管理**：发现和管理 Scoop "shims"，确保命令行工具正确识别和执行
+- **环境恢复**：从手动备份或目录迁移中恢复 Scoop 安装
+- **Manifest 开发**：使用内部脚本创建、测试和格式化 Scoop JSON manifests
 
-## Building and Usage
+### discover-shims（工具发现技能）
+- **Shim 扫描**：扫描所有可用的 Scoop shims
+- **工具分析**：通过 `--help` 和 `scoop info` 理解每个工具
+- **全局记忆**：将有价值的命令行工具写入代理的全局记忆
 
-### For Users
-To use this skill, add it to your Gemini CLI environment:
+## 使用方法
+
+### 用户安装
 ```bash
 npx skills add <repository-url>
 ```
 
-### For Developers
-If you are modifying this skill:
-- **Testing**: You can test the skill's instructions by triggering the "scoop" keyword in a Gemini CLI session and observing if the agent correctly follows the procedures in `SKILL.md`.
-- **Updating Documentation**: The `skills/scoop-skills/references/scoop-wiki/` directory is a static snapshot. To update it, you can manually pull from the official Scoop Wiki repository.
+### 开发者指南
+- **测试**：在 Gemini CLI 中触发 "scoop" 关键词，观察代理是否正确遵循 `SKILL.md` 中的流程
+- **更新文档**：`skills/scoop-skills/references/scoop-wiki/` 目录是静态快照，需手动从 Scoop Wiki 仓库拉取更新
 
-## Development Conventions
+## 开发规范
 
-- **Imperative Instructions**: `SKILL.md` uses clear, imperative language to guide the agent.
-- **Local Documentation Preference**: The agent is instructed to prioritize reading files in `references/scoop-wiki/` over fetching online documentation to ensure speed and reliability.
-- **Surgical Edits**: When the agent modifies manifests or configuration files, it should use targeted search and replace tools to maintain file integrity.
+- **祈使语气**：`SKILL.md` 使用清晰的祈使语气指导代理
+- **本地文档优先**：代理应优先读取本地文档，而非在线获取
+- **精准编辑**：修改 manifests 或配置文件时，使用精准的搜索和替换工具
+- **英文编写**：技能文件使用英文编写，确保跨平台兼容性
