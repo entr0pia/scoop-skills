@@ -51,15 +51,17 @@ Write discovered tools to your global memory file in a comment block:
 
 ```markdown
 <!-- scoop-shims start -->
-lsd: modern ls with icons and colors
-bat: cat with syntax highlighting
-fd: faster find alternative
+This block contains command-line tools discovered from Scoop shims:
+- lsd: modern ls with icons and colors
+- bat: cat with syntax highlighting
+- fd: faster find alternative
 <!-- scoop-shims end -->
 ```
 
 **Format rules:**
+- First line: brief description of the block (e.g., "This block contains command-line tools discovered from Scoop shims:")
 - One tool per line
-- Format: `cmd: short description`
+- Format: `- cmd: short description`
 - Keep descriptions concise (one line)
 - If comment block exists, replace entire block content
 
