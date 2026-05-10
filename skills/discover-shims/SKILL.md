@@ -17,17 +17,26 @@ Trigger this skill when the user asks:
 
 ## Steps
 
-### 1. Scan Available Shims
+### 1. Scan Available Tools
 
-Run `scoop shim list` to get all available shims:
+Run both `scoop shim list` and scan PATH for Scoop-related directories:
 
 ```powershell
+# Get all shims
 scoop shim list
+
+# Get Scoop-related paths from PATH
+$scoopPaths = $env:PATH -split ';' | Where-Object { $_ -match 'scoop' } | Where-Object { $_ -match '\\apps\\' }
+
+# List executables in those directories
+$scoopPaths | ForEach-Object {
+    Get-ChildItem -Path $_ -Filter "*.exe" -ErrorAction SilentlyContinue
+} | Select-Object -ExpandProperty Name
 ```
 
-### 2. Analyze Each Shim
+### 2. Analyze Each Command
 
-For each shim, gather information using both methods:
+For each command (from shim list and PATH), gather information:
 
 ```powershell
 # Get help information
@@ -35,15 +44,31 @@ For each shim, gather information using both methods:
 
 # Get Scoop package info
 scoop info <cmd>
+
+# Get source package (for commands from PATH)
+scoop shim info <cmd>
 ```
 
-### 3. Determine Tool Value
+**Note:** `scoop shim info <cmd>` returns the source package name (e.g., `fchash` comes from `fastcopy`). Use the `Source` field for tracking.
 
-Based on the help info and Scoop info, determine if each shim is:
+### 3. Determine Tool Value and Deduplicate
+
+Based on the help info and Scoop info, determine if each command is:
 - ✓ A valuable command-line tool (record it)
 - ✗ A TUI program (skip - not suitable for Agent sessions)
 - ✗ A GUI program (skip)
 - ✗ An interactive editor (skip)
+
+**If tool is unknown:**
+- Use `scoop info <cmd>` to get the homepage URL
+- Visit the homepage to understand the tool's purpose
+- Determine if it's a valuable command-line tool
+
+**Deduplication rules:**
+- Use command name as unique key
+- If same command appears in both shim list and PATH, record only once
+- Prefer `scoop shim info` for source tracking (more reliable)
+- If package provides multiple commands (e.g., ffmpeg, ffprobe), record each separately
 
 ### 4. Write to Global Memory
 
@@ -51,18 +76,20 @@ Write discovered tools to your global memory file in a comment block:
 
 ```markdown
 <!-- scoop-shims start -->
-This block contains command-line tools discovered from Scoop shims:
-- lsd: modern ls with icons and colors
-- bat: cat with syntax highlighting
-- fd: faster find alternative
+This block contains command-line tools discovered from Scoop:
+- lsd: modern ls with icons and colors (from lsd)
+- bat: cat with syntax highlighting (from bat)
+- ffmpeg: multimedia framework (from ffmpeg-shared)
+- fchash: file hash tool (from fastcopy)
 <!-- scoop-shims end -->
 ```
 
 **Format rules:**
-- First line: brief description of the block (e.g., "This block contains command-line tools discovered from Scoop shims:")
+- First line: brief description of the block (e.g., "This block contains command-line tools discovered from Scoop:")
 - One tool per line
-- Format: `- cmd: short description`
+- Format: `- cmd: short description (from package)`
 - Keep descriptions concise (one line)
+- Include source package in parentheses
 - If comment block exists, replace entire block content
 
 ## Output
