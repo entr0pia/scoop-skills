@@ -73,6 +73,7 @@ Based on the help info and Scoop info, determine if each command is:
 - If same command appears in both shim list and PATH, record only once
 - Prefer `scoop shim info` for source tracking (more reliable)
 - If package provides multiple commands (e.g., ffmpeg, ffprobe), record each separately
+- **IMPORTANT**: Do NOT use text processing tools (grep, awk, etc.) for deduplication. You already have all the information in the command outputs - analyze them directly.
 
 ### 4. Write to Global Memory
 
