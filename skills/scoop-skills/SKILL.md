@@ -23,7 +23,7 @@ If Scoop is not yet installed on the system, use the following PowerShell comman
 ### Package Management
 - **Search**: `scoop search <query>` — Find available apps.
 - **Install**: `scoop install <app> [options]` — Install apps (e.g., `-g` for global, `-i` to skip dependencies).
-  - **After install**: If the installed app provides command-line tools, append to your global memory file in the `<!-- scoop-shims -->` comment block format: `cmd: short description`
+  - **After install**: If the installed app provides valuable third-party command-line tools (not a language or built-in tool), append to your global memory file in the `<!-- scoop-shims -->` comment block format: `- cmd: short description (from package)`
 - **Uninstall**: `scoop uninstall <app> [options]` — Remove apps (e.g., `-p` to purge persistent data).
 - **Update**: `scoop update <app>` — Update apps or Scoop itself (use `*` or `-a` for all).
 - **List**: `scoop list [query]` — List all installed apps or those matching a query.
@@ -114,7 +114,7 @@ Scoop uses "shims" to expose executables. If a tool's command is not found or yo
   `scoop shim add <shim_name> <command_path> [<args>...]`
   *Note: Use a quoted `'--'` to separate shim-specific options from arguments you want to pass to the target executable.*
   Example: `scoop shim add myapp 'C:\path\app.exe' '--' --arg1 --arg2`
-  - **After add**: If the new shim is a valuable command-line tool, append to your global memory file in the `<!-- scoop-shims -->` comment block format: `cmd: short description`
+  - **After add**: If the new shim is a valuable third-party command-line tool (not a language or built-in tool), append to your global memory file in the `<!-- scoop-shims -->` comment block format: `- cmd: short description (from package)`
 - **Remove Shim**: `scoop shim rm <shim_name>...` (Caution: can remove manifest-created shims).
 - **Alter Shim**: `scoop shim alter <shim_name>` — Alternate a shim's target source.
 
