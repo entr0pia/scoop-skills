@@ -39,7 +39,7 @@ $scoopPaths | ForEach-Object {
 For each command (from shim list and PATH), gather information:
 
 ```powershell
-# Get help information
+# Get help information (skip if obviously a GUI program)
 <cmd> --help
 
 # Get Scoop package info
@@ -48,6 +48,8 @@ scoop info <cmd>
 # Get source package (for commands from PATH)
 scoop shim info <cmd>
 ```
+
+**IMPORTANT:** Do NOT run `--help` on obviously GUI programs (e.g., firefox, vscode, notepad++). Running them will launch the application and interrupt the user. Use `scoop info <cmd>` to check the description and homepage instead.
 
 **Note:** `scoop shim info <cmd>` returns the source package name (e.g., `fchash` comes from `fastcopy`). Use the `Source` field for tracking.
 
