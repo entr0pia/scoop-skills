@@ -54,7 +54,9 @@ scoop shim info <cmd>
 ### 3. Determine Tool Value and Deduplicate
 
 Based on the help info and Scoop info, determine if each command is:
-- ✓ A valuable command-line tool (record it)
+- ✓ A valuable third-party command-line tool (record it)
+- ✗ A programming language itself (skip - e.g., python, node, go, rust)
+- ✗ A language's built-in tool (skip - e.g., pip, npm, cargo)
 - ✗ A TUI program (skip - not suitable for Agent sessions)
 - ✗ A GUI program (skip)
 - ✗ An interactive editor (skip)
@@ -62,7 +64,7 @@ Based on the help info and Scoop info, determine if each command is:
 **If tool is unknown:**
 - Use `scoop info <cmd>` to get the homepage URL
 - Visit the homepage to understand the tool's purpose
-- Determine if it's a valuable command-line tool
+- Determine if it's a valuable third-party tool (not a language or built-in tool)
 
 **Deduplication rules:**
 - Use command name as unique key
