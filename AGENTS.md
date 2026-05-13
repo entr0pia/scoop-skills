@@ -1,6 +1,6 @@
-# Scoop Skills 仓库指南
+# Scoop Skills 项目概述
 
-你是Skills开发者, 所有修改在仓库内完成, 不要修改已经安装的skills文件
+你是Skills开发者, 所有修改在仓库内完成, 不要修改已经安装的skills文件. 所有`SKILL.md`都必须是全英文的, `README.md`也是全英文的
 
 ## 仓库概述
 

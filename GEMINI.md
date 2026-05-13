@@ -1,6 +1,13 @@
 # Scoop Skills 项目概述
 
-本仓库是一个**公开发布的 Scoop 技能仓库**，通过 `npx skills add` 安装到代理环境，为代理提供管理 **Scoop**（Windows 命令行安装器）的专家级能力。
+你是Skills开发者, 所有修改在仓库内完成, 不要修改已经安装的skills文件. 所有`SKILL.md`都必须是全英文的, `README.md`也是全英文的
+
+## 仓库概述
+
+这是一个**公开发布的 Scoop 技能仓库**，用于通过 `npx skills add` 安装到 AI Agent 环境。包含两个技能：
+
+- `scoop-skills` - 核心 Scoop 包管理技能
+- `discover-shims` - 发现可用命令行工具
 
 ## 项目结构
 
@@ -10,7 +17,7 @@ scoop-skills/
 │   ├── scoop-skills/          # 核心 Scoop 管理技能
 │   │   ├── SKILL.md           # 技能定义文件
 │   │   └── references/        # Scoop 官方文档本地镜像
-│   │       └── scoop-wiki/
+│   │       └── scoop-wiki/    # 36 个 Markdown 文档
 │   └── discover-shims/        # Shim 发现技能
 │       └── SKILL.md           # 技能定义文件
 ├── openspec/                  # OpenSpec 工作流配置
@@ -19,31 +26,54 @@ scoop-skills/
 
 ## 技能说明
 
-### scoop-skills（核心技能）
-- **包管理**：搜索、安装、更新、卸载 Windows 应用
-- **Shim 管理**：发现和管理 Scoop "shims"，确保命令行工具正确识别和执行
-- **环境恢复**：从手动备份或目录迁移中恢复 Scoop 安装
-- **Manifest 开发**：使用内部脚本创建、测试和格式化 Scoop JSON manifests
+### scoop-skills
+核心技能，当用户提到 "install"、"scoop"、"package"、"shim" 等关键词时触发。提供：
+- 包管理命令（搜索、安装、更新、卸载）
+- Shim 发现和管理
+- 环境恢复
+- Manifest 开发
 
-### discover-shims（工具发现技能）
-- **Shim 扫描**：扫描所有可用的 Scoop shims
-- **工具分析**：通过 `--help` 和 `scoop info` 理解每个工具
-- **全局记忆**：将有价值的命令行工具写入代理的全局记忆
+### discover-shims
+工具发现技能，当用户问 "what tools"、"available commands" 等时触发。提供：
+- 扫描所有可用 shim
+- 通过 `--help` 和 `scoop info` 分析工具
+- 推断每个工具替代的内置命令（从 `scoop info` Description 提取）
+- 按功能分类输出，附带使用示例
+- 将有价值的命令行工具写入全局记忆
 
-## 使用方法
+## 开发工作流
 
-### 用户安装
-```bash
-npx skills add <repository-url>
-```
+### 修改技能
+1. 编辑对应的 `skills/<skill-name>/SKILL.md`
+2. 测试：触发相关关键词验证行为
+3. **不要在开发会话中更新全局记忆文件**。提示用户在新的会话中执行技能，完成全局记忆的更新
+4. 更新文档：手动从 Scoop Wiki 仓库拉取更新到 `skills/scoop-skills/references/scoop-wiki/`
 
-### 开发者指南
-- **测试**：在 Gemini CLI 中触发 "scoop" 关键词，观察代理是否正确遵循 `SKILL.md` 中的流程
-- **更新文档**：`skills/scoop-skills/references/scoop-wiki/` 目录是静态快照，需手动从 Scoop Wiki 仓库拉取更新
+### OpenSpec 工作流
+- 使用 `openspec` CLI 管理变更
+- 命令：`openspec list --json`、`openspec status --change "<name>" --json`
+- 归档：`openspec archive <name>`
 
-## 开发规范
+## 重要约束
 
-- **祈使语气**：`SKILL.md` 使用清晰的祈使语气指导代理
-- **本地文档优先**：代理应优先读取本地文档，而非在线获取
-- **精准编辑**：修改 manifests 或配置文件时，使用精准的搜索和替换工具
-- **英文编写**：技能文件使用英文编写，确保跨平台兼容性
+- **GPL-3.0 许可证**：修改需遵守许可条款
+- **本地文档优先**：代理应优先使用 `skills/scoop-skills/references/scoop-wiki/` 中的文档
+- **无自动测试**：没有测试套件，验证依赖手动触发
+- **静态快照**：`references/scoop-wiki/` 是静态副本，不会自动更新
+
+## 常见任务
+
+### 添加新技能
+1. 在 `skills/<skill-name>/` 目录创建 `SKILL.md`
+2. 遵循 [agent-skills 规范](https://github.com/vercel-labs/agent-skills)
+3. 使用英文编写技能内容
+
+### 更新文档
+1. 从 Scoop Wiki 仓库获取最新内容
+2. 替换 `skills/scoop-skills/references/scoop-wiki/` 中的对应文件
+3. 确保文件名和路径一致
+
+### 调试技能
+1. 检查 `SKILL.md` 中的触发条件
+2. 验证关键词匹配
+3. 测试指令执行结果
