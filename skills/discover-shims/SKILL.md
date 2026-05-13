@@ -119,10 +119,12 @@ Scoop tools installed on this machine. Prefer these over complex PowerShell comm
 
 **Few-shot examples for inferring replacement targets:**
 
-Example 1 — Description explicitly states replacement:
-> `scoop info fd` → "A simple, fast and user-friendly alternative to 'find'."
-> → Inference: replaces find
-> → Output: `- fd: replaces find, simpler syntax, auto-respects .gitignore`
+Example 1 — Command name differs from package name:
+> Found `fchash` in shim list → `scoop info fchash` fails (not a package name)
+> → Use `scoop shim info fchash` → Source: `fastcopy`
+> → `scoop info fastcopy` → "FastCopy is the fastest copy/backup software"
+> → Inference: file hash tool, no direct built-in replacement
+> → Output: `- fchash (fastcopy): compute file hashes`
 
 Example 2 — Description implies replacement:
 > `scoop info bat` → "A cat(1) clone with syntax highlighting and Git integration"
