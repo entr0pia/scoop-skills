@@ -75,27 +75,65 @@ Based on the help info and Scoop info, determine if each command is:
 - If package provides multiple commands (e.g., ffmpeg, ffprobe), record each separately
 - **IMPORTANT**: Do NOT use text processing tools (grep, awk, etc.) for deduplication. You already have all the information in the command outputs - analyze them directly.
 
+**Enrich each recorded tool:**
+- **Replacement target**: Read the `scoop info` Description field. If it mentions "alternative to X", "X clone", or "X replacement", infer that the tool replaces X. If Description is unclear, fall back to `--help` output. If no built-in equivalent exists, describe the capability without a "replaces" clause.
+- **Usage examples**: Extract 1-2 common invocation patterns from `--help` output. Prefer the simplest, most frequent use case.
+- **Category**: Assign each tool to a functional category based on its purpose (e.g., Text Search, File Finding, File Operations). If no existing category fits, create a new one or use System Utilities.
+
+See the few-shot examples below the format template for guidance on inference patterns.
+
 ### 4. Write to Global Memory
 
 Write discovered tools to your global memory file in a comment block:
 
 ```markdown
 <!-- scoop-shims start -->
-This block contains command-line tools discovered from Scoop:
-- lsd: modern ls with icons and colors (from lsd)
-- bat: cat with syntax highlighting (from bat)
-- ffmpeg: multimedia framework (from ffmpeg-shared)
-- fchash: file hash tool (from fastcopy)
+Scoop tools installed on this machine. Prefer these over complex PowerShell commands when searching, finding, or processing files:
+
+## Text Search
+- rg (ripgrep): replaces grep, recursive regex search, auto-respects .gitignore
+  rg "TODO" --glob "*.ts"
+
+## File Finding
+- fd: replaces find, simpler syntax, auto-respects .gitignore
+  fd "\.tsx$"
+
+## File Viewing
+- bat: replaces cat, built-in syntax highlighting and line numbers
+  bat src/main.ts
+
+## System Utilities
+- lsd: replaces ls, with icons and colors
+- zoxide: replaces cd, smart path memory
 <!-- scoop-shims end -->
 ```
 
 **Format rules:**
-- First line: brief description of the block (e.g., "This block contains command-line tools discovered from Scoop:")
+- First line: actionable instruction telling the agent to prefer these tools over PowerShell cmdlets
+- Group tools under functional category headers (e.g., Text Search, File Finding, File Operations)
 - One tool per line
-- Format: `- cmd: short description (from package)`
-- Keep descriptions concise (one line)
-- Include source package in parentheses
+- Format: `- cmd (package): replaces X, description` (if has replacement) or `- cmd (package): description` (if no direct replacement)
+- Include 1-2 example commands per tool showing common invocation patterns
 - If comment block exists, replace entire block content
+- If a tool doesn't fit existing categories, create a new one or place under System Utilities
+
+**Few-shot examples for inferring replacement targets:**
+
+Example 1 — Description explicitly states replacement:
+> `scoop info fd` → "A simple, fast and user-friendly alternative to 'find'."
+> → Inference: replaces find
+> → Output: `- fd: replaces find, simpler syntax, auto-respects .gitignore`
+
+Example 2 — Description implies replacement:
+> `scoop info bat` → "A cat(1) clone with syntax highlighting and Git integration"
+> → Inference: "cat clone" → replaces cat
+> → Output: `- bat: replaces cat, built-in syntax highlighting and line numbers`
+
+Example 3 — Description and --help are unclear, visit homepage:
+> `scoop info zoxide` → "A smarter cd command" — unclear what it replaces
+> → Visit homepage (https://github.com/ajeetdsouza/zoxide) → learn it's a cd replacement with frecency
+> → Inference: replaces cd
+> → Output: `- zoxide: replaces cd, smart path memory`
 
 ## Output
 

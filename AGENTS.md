@@ -1,5 +1,7 @@
 # Scoop Skills 仓库指南
 
+你是Skills开发者, 所有修改在仓库内完成, 不要修改已经安装的skills文件
+
 ## 仓库概述
 
 这是一个**公开发布的 Scoop 技能仓库**，用于通过 `npx skills add` 安装到 AI Agent 环境。包含两个技能：
@@ -35,6 +37,8 @@ scoop-skills/
 工具发现技能，当用户问 "what tools"、"available commands" 等时触发。提供：
 - 扫描所有可用 shim
 - 通过 `--help` 和 `scoop info` 分析工具
+- 推断每个工具替代的内置命令（从 `scoop info` Description 提取）
+- 按功能分类输出，附带使用示例
 - 将有价值的命令行工具写入全局记忆
 
 ## 开发工作流
@@ -42,7 +46,8 @@ scoop-skills/
 ### 修改技能
 1. 编辑对应的 `skills/<skill-name>/SKILL.md`
 2. 测试：触发相关关键词验证行为
-3. 更新文档：手动从 Scoop Wiki 仓库拉取更新到 `skills/scoop-skills/references/scoop-wiki/`
+3. **不要在开发会话中更新全局记忆文件**。提示用户在新的会话中执行技能，完成全局记忆的更新
+4. 更新文档：手动从 Scoop Wiki 仓库拉取更新到 `skills/scoop-skills/references/scoop-wiki/`
 
 ### OpenSpec 工作流
 - 使用 `openspec` CLI 管理变更
