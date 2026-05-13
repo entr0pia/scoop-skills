@@ -62,6 +62,7 @@ Based on the help info and Scoop info, determine if each command is:
 - ✗ A TUI program (skip - not suitable for Agent sessions)
 - ✗ A GUI program (skip)
 - ✗ An interactive editor (skip)
+- ✗ A shell function/alias (skip - e.g., zoxide requires `zoxide init powershell` to create `z` alias, not a standalone shim)
 
 **If tool is unknown:**
 - Use `scoop info <cmd>` to get the homepage URL
@@ -84,6 +85,8 @@ See the few-shot examples below the format template for guidance on inference pa
 
 ### 4. Write to Global Memory
 
+**IMPORTANT: If the `<!-- scoop-shims start -->` comment block already exists in your global memory file, you MUST replace the entire block content with the newly discovered tools. Do NOT skip, merge, or leave it unchanged.**
+
 Write discovered tools to your global memory file in a comment block:
 
 ```markdown
@@ -104,7 +107,7 @@ Scoop tools installed on this machine. Prefer these over complex PowerShell comm
 
 ## System Utilities
 - lsd: replaces ls, with icons and colors
-- zoxide: replaces cd, smart path memory
+  lsd -la
 <!-- scoop-shims end -->
 ```
 
@@ -115,6 +118,8 @@ Scoop tools installed on this machine. Prefer these over complex PowerShell comm
 - Format: `- cmd (package): replaces X, description` (if has replacement) or `- cmd (package): description` (if no direct replacement)
 - Include 1-2 example commands per tool showing common invocation patterns
 - If comment block exists, replace entire block content
+  ✗ WRONG: "The block already exists with 12 tools — skipping"
+  ✓ CORRECT: Overwrite the entire block with newly discovered tools
 - If a tool doesn't fit existing categories, create a new one or place under System Utilities
 
 **Few-shot examples for inferring replacement targets:**
@@ -131,11 +136,11 @@ Example 2 — Description implies replacement:
 > → Inference: "cat clone" → replaces cat
 > → Output: `- bat: replaces cat, built-in syntax highlighting and line numbers`
 
-Example 3 — Description and --help are unclear, visit homepage:
+Example 3 — Description and --help are unclear, visit homepage, then skip:
 > `scoop info zoxide` → "A smarter cd command" — unclear what it replaces
-> → Visit homepage (https://github.com/ajeetdsouza/zoxide) → learn it's a cd replacement with frecency
-> → Inference: replaces cd
-> → Output: `- zoxide: replaces cd, smart path memory`
+> → Visit homepage (https://github.com/ajeetdsouza/zoxide) → learn it requires `zoxide init powershell` to create `z` shell function
+> → Detection: `z` is not a Scoop shim, it's a shell alias — skip
+> → Action: skip (shell function, not a standalone executable)
 
 ## Output
 
